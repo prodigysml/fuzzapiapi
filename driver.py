@@ -1,3 +1,4 @@
+# coding=utf-8
 from flask import Flask
 from flask import request
 from db import run_db_query
@@ -42,19 +43,64 @@ def search_all_scans():
     return run_db_query(app.config["DBPATH"], query, params)
 
 
-def extract_authenticity_token():
-    r = requests.get("http://" + app.config["FUZZAPI_IP"] + ":" + app.config["FUZZAPI_PORT"] + "/users/sign_in")
+def extract_authenticity_token(base_url, user, password):
 
-    soup = BeautifulSoup(r.text, "html.parser")
+    session = requests.Session()
 
-    return soup.find("input", {"name": "authenticity_token"})["value"]
+    r = session.get(base_url + "/users/sign_in")
+
+    soup = BeautifulSoup(r.text, "lxml")
+
+    auth_token = soup.find("meta", {"name": "csrf-token"})["content"]
+
+    params = {
+        "authenticity_token": auth_token,
+        "user[email]": user,
+        "user[password]": password,
+        "user[remember_me]": "0",
+        "commit": "Sign in"
+    }
+
+    r = session.post(base_url + "/users/sign_in", data=params)
+
+    soup = BeautifulSoup(r.text, "lxml")
+
+    return session, soup.find("meta", {"name": "csrf-token"})["content"]
 
 
-@app.route("/scan/start", methods=["GET"])
+@app.route("/scan/start", methods=["POST"])
 def start_scan():
-    auth_token = extract_authenticity_token()
+    user = request.form.get("user")
 
-    return
+    password = request.form.get("pass")
+
+    headers = request.form.get("headers")
+
+    if headers is None:
+        headers = ""
+
+    parameters = request.form.get("params")
+
+    if parameters is None:
+        parameters = ""
+
+    base_url = "http://" + app.config["FUZZAPI_IP"] + ":" + app.config["FUZZAPI_PORT"]
+
+    session, auth_token = extract_authenticity_token(base_url, user, password)
+
+    params = {"authenticity_token": auth_token,
+            "url": "https://www.google.com.au/search?site=&source=hp&q=hello",
+            "method[]": "GET",
+            "headers": headers,
+            "parameters": parameters}
+
+    r = session.post(base_url + "/scans", data=params)
+
+    soup = BeautifulSoup(r.text, "lxml")
+
+
+
+    return "Started the scan! The scan ID is: " + soup.find("div", {"id": "vulnerability-container"})["data-scan"]
 
 
 if __name__ == "__main__":
