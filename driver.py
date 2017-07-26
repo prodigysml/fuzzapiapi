@@ -1,7 +1,5 @@
 from flask import Flask
-from flask import Response
-import sqlite3
-import json
+from db import run_db_query
 
 app = Flask(__name__)
 app.config["DBPATH"] = "/root/Documents/HackingTools/fuzzapi/db/development.sqlite3"
@@ -9,17 +7,7 @@ app.config["DBPATH"] = "/root/Documents/HackingTools/fuzzapi/db/development.sqli
 
 @app.route("/scans/all", methods=["GET"])
 def get_all_scans():
-    conn = sqlite3.connect(app.config["DBPATH"])
-
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM SCANS")
-
-    response = Response(json.dumps(cursor.fetchall()))
-
-    response.headers['Content-type'] = "application/json"
-
-    return response
+    return run_db_query(app.config["DBPATH"], "SELECT * FROM SCANS")
 
 
 if __name__ == "__main__":
