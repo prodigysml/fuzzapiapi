@@ -112,7 +112,7 @@ def start_scan():
 @app.route("/scan/results", methods=["GET"])
 def scan_results():
     # Search for scans with scan_id (only scan_id initially for the PoC)
-    query = "SELECT * FROM VULNERABILTIES"
+    query = "SELECT * FROM VULNERABILITIES"
 
     scan_id = request.args.get("id")
 
