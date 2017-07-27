@@ -84,6 +84,8 @@ def start_scan():
 
     headers = request.form.get("headers")
 
+    url = request.form.get("url")
+
     if headers is None:
         headers = ""
 
@@ -97,7 +99,7 @@ def start_scan():
     session, auth_token = extract_authenticity_token(base_url, user, password)
 
     params = {"authenticity_token": auth_token,
-              "url": "https://www.google.com.au/search?site=&source=hp&q=hello",
+              "url": url,
               "method[]": "GET",
               "headers": headers,
               "parameters": parameters}
