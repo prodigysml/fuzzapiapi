@@ -41,7 +41,7 @@ After installing the required dependencies, please run the following command:
 
 | Method 	|    Path   	| Parameters 	|                 Description                	|
 |:------:	|:---------:	|:----------:	|:------------------------------------------:	|
-|   GET  	| /scan/all 	|    None    	| Gets all the scans in the Fuzzapi database 	|
+|   [GET](#get-all-scans)  	| /scan/all 	|    None    	| Gets all the scans in the Fuzzapi database 	|
 
 ## Get All Scans
 ### Request Example
@@ -61,4 +61,4 @@ Host: 192.168.33.128
 
 
 # Note
-Scans are the actual scan containing the timestamp, target, etc. Vulnerabilities actually hold the bugs found within the target.
+Scans (database table and Ruby object) are the actual scan containing the timestamp, target, etc. Vulnerabilities (database table and Ruby object) actually hold the bugs found within the target.
