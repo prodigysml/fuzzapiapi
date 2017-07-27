@@ -11,12 +11,12 @@ app.config["FUZZAPI_IP"] = "192.168.33.128"
 app.config["FUZZAPI_PORT"] = "3000"
 
 
-@app.route("/scans/all", methods=["GET"])
+@app.route("/scan/all", methods=["GET"])
 def get_all_scans():
     return run_db_query(app.config["DBPATH"], "SELECT * FROM SCANS")
 
 
-@app.route("/scans/search", methods=["GET"])
+@app.route("/scan/search", methods=["GET"])
 def search_all_scans():
     # flag to add where clause to query
     where_clause_present = False
@@ -107,6 +107,20 @@ def start_scan():
     soup = BeautifulSoup(r.text, "lxml")
 
     return "Started the scan! The scan ID is: " + soup.find("div", {"id": "vulnerability-container"})["data-scan"]
+
+
+@app.route("/scan/results", methods=["GET"])
+def scan_results():
+    # Search for scans with scan_id (only scan_id initially for the PoC)
+    query = "SELECT * FROM VULNERABILTIES"
+
+    scan_id = request.args.get("id")
+
+    if scan_id is not None:
+        query += " WHERE scan_id = :id"
+        return run_db_query(app.config["DBPATH"], query, {"id": scan_id})
+
+    return run_db_query(app.config["DBPATH"], query)
 
 
 if __name__ == "__main__":
