@@ -42,7 +42,7 @@ After installing the required dependencies, please run the following command:
 | Method 	|    Path   	| Parameters 	|                 Description                	|
 |:------:	|:---------:	|:----------:	|:------------------------------------------:	|
 |   [GET](#get-all-scans)  	| [/scan/all](#get-all-scans) 	|    [None](#get-all-scans)    	| [Gets all the scans in the Fuzzapi database](#get-all-scans) 	|
-|   GET  	|  /scan/search 	| id, url, sid, parameters, method, cookies, created_at, updated_at, json, user_id, status 	| Searches for relevant records in the scan table. (Wildcards enabled!) 	|
+|   [GET](#search-all-scans)  	|  [/scan/search](#search-all-scans) 	| [id, url, sid, parameters, method, cookies, created_at, updated_at, json, user_id, status](#search-all-scans) 	| [Searches for relevant records in the scan table. (Wildcards enabled!)](#search-all-scans) 	|
 |  POST  	|  /scan/start  	|                             user, pass, headers, url, params                             	|             Starts the Fuzzapi vulnerability scan process             	|
 |   GET  	| /scan/results 	|                                            id                                            	|          Gets all the vulnerabilities for a specified scan id         	|
 
@@ -66,6 +66,22 @@ Each field in the above array is listed below (basically to help you identify wh
 ```
 
 
+## Search All Scans
+### Request Example
+```
+GET /scan/search?id=1 HTTP/1.1
+Host: 192.168.33.128
+
+
+```
+### Response Example
+```json
+[[1, "https://rest.nexmo.com", "9706a8bd209f86201627a306a89eb046", "", "[\"GET\"]", "", "2017-07-26 02:50:18.344585", "2017-07-26 02:50:45.136466", null, 1, "completed"]]
+```
+Each field in the above array is listed below (basically to help you identify what the data means):
+```json
+["id", "url", "sid", "parameters", "method", "cookies", "created_at", "updated_at", "json", "user_id", "status"]
+```
 
 
 
