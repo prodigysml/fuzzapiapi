@@ -17,3 +17,50 @@ The code was written in a Windows 10 machine using Intellij (the best IDE!) and 
 # Installation
 To install this package, simple run `pip install -r requirements.txt`
 
+# Places to do Quick Edits
+This tool does not have a config tool (might add one in if it really helps, but not sure yet). The `driver.py` file holds all the configurations that need to be changed to work with your machine. 
+
+`app.config["DBPATH"]` is the path to the Fuzzapi database. This path should be something like /path/to/fuzzapi/db/development.sqlite3
+
+`app.config["FUZZAPI_IP"]` is the server's IP Address
+
+`app.config["FUZZAPI_PORT"]` is the port Fuzzapi is currently running on. 
+
+If you want FuzzApiApi to run on another port (despite 80), then please change the port number to whichever you wish (provided it is not already in use), in the line of code below:
+
+```python
+app.run("0.0.0.0", port="80")
+```
+
+# Usage
+For the usage, we assume the IP address of the server is w.x.y.z and the port is 80
+After installing the required dependencies, please run the following command:
+`python driver.py`
+
+# API Documentation
+
+| Method 	|    Path   	| Parameters 	|                 Description                	|
+|:------:	|:---------:	|:----------:	|:------------------------------------------:	|
+|   GET  	| /scan/all 	|    None    	| Gets all the scans in the Fuzzapi database 	|
+|        	|           	|            	|                                            	|
+|        	|           	|            	|                                            	|
+
+## Get All Scans
+### Request Example
+```
+GET /scan/all HTTP/1.1
+Host: 192.168.33.128
+
+
+```
+###Response Example
+```json
+[[1, "https://rest.nexmo.com", "9706a8bd209f86201627a306a89eb046", "", "[\"GET\"]", "", "2017-07-26 02:50:18.344585", "2017-07-26 02:50:45.136466", null, 1, "completed"]]
+```
+
+
+
+
+
+# Note
+Scans are the actual scan containing the timestamp, target, etc. Vulnerabilities actually hold the bugs found within the target.
