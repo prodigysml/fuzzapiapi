@@ -42,8 +42,6 @@ After installing the required dependencies, please run the following command:
 | Method 	|    Path   	| Parameters 	|                 Description                	|
 |:------:	|:---------:	|:----------:	|:------------------------------------------:	|
 |   GET  	| /scan/all 	|    None    	| Gets all the scans in the Fuzzapi database 	|
-|        	|           	|            	|                                            	|
-|        	|           	|            	|                                            	|
 
 ## Get All Scans
 ### Request Example
@@ -53,7 +51,7 @@ Host: 192.168.33.128
 
 
 ```
-###Response Example
+### Response Example
 ```json
 [[1, "https://rest.nexmo.com", "9706a8bd209f86201627a306a89eb046", "", "[\"GET\"]", "", "2017-07-26 02:50:18.344585", "2017-07-26 02:50:45.136466", null, 1, "completed"]]
 ```
