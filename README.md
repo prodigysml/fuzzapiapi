@@ -41,7 +41,7 @@ After installing the required dependencies, please run the following command:
 
 | Method 	|    Path   	| Parameters 	|                 Description                	|
 |:------:	|:---------:	|:----------:	|:------------------------------------------:	|
-|   [GET](#get-all-scans)  	| /scan/all 	|    None    	| Gets all the scans in the Fuzzapi database 	|
+|   [GET](#get-all-scans)  	| [/scan/all](#get-all-scans) 	|    [None](#get-all-scans)    	| [Gets all the scans in the Fuzzapi database](#get-all-scans) 	|
 
 ## Get All Scans
 ### Request Example
