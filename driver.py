@@ -24,10 +24,13 @@ def search_all_scans():
     # base query
     query = "SELECT * FROM SCANS"
 
+    # list of all the columns
     args = ["id", "url", "sid", "parameters", "method", "cookies", "created_at", "updated_at", "json", "user_id", "status"]
 
+    # current params being used
     params = dict()
 
+    #
     for arg in args:
         get_variable = request.args.get(arg)
 
@@ -35,6 +38,9 @@ def search_all_scans():
             if not where_clause_present:
                 query += " WHERE"
                 where_clause_present = True
+
+            if len(params) >= 2:
+                query += " AND "
 
             query += " " + arg + " LIKE :" + arg
 
