@@ -44,7 +44,7 @@ After installing the required dependencies, please run the following command:
 |   [GET](#get-all-scans)  	| [/scan/all](#get-all-scans) 	|    [None](#get-all-scans)    	| [Gets all the scans in the Fuzzapi database](#get-all-scans) 	|
 |   [GET](#search-all-scans)  	|  [/scan/search](#search-all-scans) 	| [id, url, sid, parameters, method, cookies, created_at, updated_at, json, user_id, status](#search-all-scans) 	| [Searches for relevant records in the scan table. (Wildcards enabled!)](#search-all-scans) 	|
 |  [POST](#start-scan)  	|  [/scan/start](#start-scan)  	|                             [user, pass, headers, url, params](#start-scan)                             	|             [Starts the Fuzzapi vulnerability scan process](#start-scan)             	|
-|   GET  	| /scan/results 	|                                            id                                            	|          Gets all the vulnerabilities for a specified scan id         	|
+|   [GET](get_scan_vulnerabilities)  	| [/scan/results](get_scan_vulnerabilities) 	|                                            [id](get_scan_vulnerabilities)                                            	|          [Gets all the vulnerabilities for a specified scan id](get_scan_vulnerabilities)         	|
 
 
 
@@ -102,6 +102,24 @@ Started the scan! The scan ID is: <number>
 ```
 
 
+
+## Get Scan Vulnerabilities
+### Request Example
+```
+GET /scan/results?id=1 HTTP/1.1
+Host: w.x.y.z
+
+
+```
+### Response Example
+```json
+[[1, "Vulnerability", "1", "", "Information Disclosure of Server version", "Server: PWS/8.2.1.6.5", "2017-07-26 02:50:45.044551", "2017-07-26 02:50:45.044551", "INFORMATIVE"]]
+```
+Each field in the above array is listed below (basically to help you identify what the data means):
+
+```json
+["id", "class_type", "scan_id", "parameter", "description", "value", "created_at", "updated_at", "status"]
+```
 
 # Note
 Scans (database table and Ruby object) are the actual scan containing the timestamp, target, etc. Vulnerabilities (database table and Ruby object) actually hold the bugs found within the target.
