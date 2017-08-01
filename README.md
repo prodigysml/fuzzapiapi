@@ -43,7 +43,7 @@ After installing the required dependencies, please run the following command:
 |:------:	|:---------:	|:----------:	|:------------------------------------------:	|
 |   [GET](#get-all-scans)  	| [/scan/all](#get-all-scans) 	|    [None](#get-all-scans)    	| [Gets all the scans in the Fuzzapi database](#get-all-scans) 	|
 |   [GET](#search-all-scans)  	|  [/scan/search](#search-all-scans) 	| [id, url, sid, parameters, method, cookies, created_at, updated_at, json, user_id, status](#search-all-scans) 	| [Searches for relevant records in the scan table. (Wildcards enabled!)](#search-all-scans) 	|
-|  POST  	|  /scan/start  	|                             user, pass, headers, url, params                             	|             Starts the Fuzzapi vulnerability scan process             	|
+|  [POST](#start-scan)  	|  [/scan/start](#start-scan)  	|                             [user, pass, headers, url, params](#start-scan)                             	|             [Starts the Fuzzapi vulnerability scan process](#start-scan)             	|
 |   GET  	| /scan/results 	|                                            id                                            	|          Gets all the vulnerabilities for a specified scan id         	|
 
 
@@ -52,7 +52,7 @@ After installing the required dependencies, please run the following command:
 ### Request Example
 ```
 GET /scan/all HTTP/1.1
-Host: 192.168.33.128
+Host: w.x.y.z
 
 
 ```
@@ -70,7 +70,7 @@ Each field in the above array is listed below (basically to help you identify wh
 ### Request Example
 ```
 GET /scan/search?id=1 HTTP/1.1
-Host: 192.168.33.128
+Host: w.x.y.z
 
 
 ```
@@ -81,6 +81,24 @@ Host: 192.168.33.128
 Each field in the above array is listed below (basically to help you identify what the data means):
 ```json
 ["id", "url", "sid", "parameters", "method", "cookies", "created_at", "updated_at", "json", "user_id", "status"]
+```
+
+These fields can also be used for searching within the database. 
+
+
+## Start Scan
+### Request Example
+```
+POST /scan/start HTTP/1.1
+Host: w.x.y.z
+
+user=username&pass=password&headers=headers&url=https://google.com&params=parameters
+
+
+```
+### Response Example
+```
+Started the scan! The scan ID is: <number>
 ```
 
 
